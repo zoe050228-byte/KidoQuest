@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>KidoQuest 🦁</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet"/>
+</head>
+<body>
+<div id="rbar"></div>
+<!-- Colorful soft floating bubbles -->
+<div id="bubbles">
+  <div class="bub" style="width:420px;height:420px;background:#ffcc80;top:-140px;left:-120px;--bd:9s;border-radius:50%;"></div>
+  <div class="bub" style="width:360px;height:360px;background:#b3e5fc;bottom:-120px;right:-100px;--bd:11s;border-radius:50%;"></div>
+  <div class="bub" style="width:280px;height:280px;background:#e1bee7;top:35%;left:55%;--bd:7s;border-radius:50%;"></div>
+  <div class="bub" style="width:200px;height:200px;background:#c8e6c9;top:60%;left:-60px;--bd:8s;border-radius:50%;"></div>
+  <div class="bub" style="width:180px;height:180px;background:#ffe0b2;top:15%;right:-40px;--bd:10s;border-radius:50%;"></div>
+</div>
+<div id="cfl"></div>
+<div id="fl"></div>
+<!-- TTS bar -->
+<div id="tts-bar">
+  <div class="tb">
+    <div class="tbb"></div><div class="tbb"></div><div class="tbb"></div>
+    <div class="tbb"></div><div class="tbb"></div>
+  </div>
+  <span id="tts-txt">Speaking...</span>
+</div>
+<!-- ═══════ AUTH ═══════ -->
+<div class="screen on" id="s-auth" style="justify-content:center;padding-top:60px;">
+<div class="card">
+  <span class="mascot">🦁</span>
+  <div class="logo">KidoQuest</div>
+  <div class="sub">Learn · Play · Grow 🌟</div>
+  <div class="tabs">
+    <div class="tab on" onclick="atab('login')">Login</div>
+    <div class="tab" onclick="atab('reg')">Register</div>
+  </div>
+  <div id="f-login">
+    <span class="fl">Your Name</span>
+    <input class="fi" id="ln" placeholder="e.g. Aarav"/>
+    <span class="fl">Password</span>
+    <input class="fi" type="password" id="lp" placeholder="••••••"/>
+    <span class="fl">Language</span>
+    <div class="lrow">
+      <div class="lb on" onclick="slng(this,'l')" data-l="en">🇬🇧 English</div>
+      <div class="lb" onclick="slng(this,'l')" data-l="hi">🇮🇳 Hindi</div>
+      <div class="lb" onclick="slng(this,'l')" data-l="es">🇪🇸 Español</div>
+    </div>
+    <div class="al aerr" id="lerr"></div>
+    <div class="al aok" id="lok"></div>
+    <button class="bmain" onclick="doLogin()">Let's Go! 🚀</button>
+  </div>
+  <div id="f-reg" style="display:none;">
+    <span class="fl">Your Name</span>
+    <input class="fi" id="rn" placeholder="e.g. Priya"/>
+    <span class="fl">Age</span>
+    <input class="fi" type="number" id="ra" placeholder="3, 4 or 5" min="3" max="5"/>
+    <div class="anote">Only for kids aged 3–5 🎈</div>
+    <span class="fl">Password</span>
+    <input class="fi" type="password" id="rp" placeholder="Choose a fun password"/>
+    <span class="fl">Language</span>
+    <div class="lrow">
+      <div class="lb on" onclick="slng(this,'r')" data-l="en">🇬🇧 English</div>
+      <div class="lb" onclick="slng(this,'r')" data-l="hi">🇮🇳 Hindi</div>
+      <div class="lb" onclick="slng(this,'r')" data-l="es">🇪🇸 Español</div>
+    </div>
+    <div class="al aerr" id="rerr"></div>
+    <div class="al aok" id="rok"></div>
+    <button class="bmain" onclick="doReg()">Join KidoQuest! 🎉</button>
+  </div>
+</div>
+</div>
+<!-- ═══════ HOME ═══════ -->
+<div class="screen" id="s-home" style="padding-top:60px;">
+  <div class="mascot" style="font-size:66px;z-index:2;">🦁</div>
+  <div class="greet" id="greet">Hello, Friend!</div>
+  <div class="hgrid">
+    <div class="hb learn" onclick="go('learn')"><span class="ic">📘</span><span class="lb2">Learning</span></div>
+    <div class="hb games" onclick="go('games')"><span class="ic">🎮</span><span class="lb2">Games</span></div>
+    <div class="hb chat"  onclick="go('chat')"><span class="ic">🤖</span><span class="lb2">Chatbot</span></div>
+    <div class="hb out"   onclick="doLogout()"><span class="ic">👋</span><span class="lb2">Logout</span></div>
+  </div>
+</div>
+<!-- ═══════ LEARNING ═══════ -->
+<div class="screen" id="s-learn" style="padding-bottom:70px;">
+  <div class="hdr">
+    <button class="bk" onclick="stopAP();go('home')">←</button>
+    <span class="htitle">📘 Learning</span>
+  </div>
+  <div class="mtabs">
+    <div class="mt on" onclick="loadMod('alphabets',this)">🔤 Alphabets</div>
+    <div class="mt" onclick="loadMod('numbers',this)">🔢 Numbers</div>
+    <div class="mt" onclick="loadMod('animals',this)">🐾 Animals</div>
+    <div class="mt" onclick="loadMod('birds',this)">🐦 Birds</div>
+  </div>
+  <div class="pw">
+    <div class="pl"><span id="ptxt">1 of 26</span><span id="ppct">0%</span></div>
+    <div class="ptr"><div class="pfi" id="pfi" style="width:0%"></div></div>
+  </div>
+  <div class="apb" id="apb"><div class="apd"></div> AUTO-PLAYING</div>
+  <div class="scwrap">
+    <div class="sc" id="sc">
+      <div class="lw" id="lw"></div>
+      <div class="oring" id="oring" style="width:220px;height:220px;"></div>
+      <div class="spsw" id="spsw"></div>
+      <span class="semoji" id="semoji">🍎</span>
+      <div class="slet" id="slet">A</div>
+      <div class="sword" id="sword">Apple</div>
+      <div class="swave">
+        <svg viewBox="0 0 120 12" fill="none">
+          <path d="M0 6 Q15 0 30 6 Q45 12 60 6 Q75 0 90 6 Q105 12 120 6" stroke="rgba(255,255,255,.55)" stroke-width="2.5" fill="none"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <div class="spkw">
+    <div class="wb" id="wb1"></div><div class="wb" id="wb2"></div>
+    <div class="wb" id="wb3"></div><div class="wb" id="wb4"></div><div class="wb" id="wb5"></div>
+  </div>
+  <div class="spbox" id="spbox"><div class="splets" id="splets"></div></div>
+  <div class="lctrl">
+    <button class="lcb bnv" onclick="nav(-1)">⬅ Prev</button>
+    <button class="lcb bre" onclick="sayIt()">🔊 Say It</button>
+    <button class="lcb bsp" onclick="spellIt()">✏️ Spell It</button>
+    <button class="lcb bsl" onclick="saySlw()">🐢 Read Slow</button>
+    <button class="lcb bpa" id="pbtn" onclick="togPause()">⏸ Pause</button>
+    <button class="lcb bnv" onclick="nav(1)">Next ➡</button>
+  </div>
+  <div class="mstrip" id="mstrip"></div>
+</div>
+<!-- ═══════ GAMES ═══════ -->
+<div class="screen" id="s-games">
+  <div class="hdr">
+    <button class="bk" onclick="go('home')">←</button>
+    <span class="htitle">🎮 Games</span>
+  </div>
+  <div class="gtabs">
+    <div class="gt on" onclick="loadGame('match',this)">🔤 Match Letter</div>
+    <div class="gt" onclick="loadGame('number',this)">🔢 Pick Number</div>
+    <div class="gt" onclick="loadGame('animal',this)">🐾 Name Animal</div>
+  </div>
+  <div class="garea">
+    <div class="sbar"><span class="slbl">Score ⭐</span><span class="sval" id="gscore">0</span></div>
+    <div class="gq" id="gq">?</div>
+    <div class="gpr" id="gpr">Loading...</div>
+    <div class="gfb" id="gfb"></div>
+    <div class="ogrid" id="ogrid"></div>
+    <button class="gnxt" id="gnxt" onclick="nextQ()">Next ➡️</button>
+  </div>
+</div>
+<!-- ═══════ CHAT ═══════ -->
+<div class="screen" id="s-chat">
+  <div class="hdr">
+    <button class="bk" onclick="go('home')">←</button>
+    <span class="htitle">🤖 Chatbot</span>
+  </div>
+  <div class="carea">
+    <div class="cmsgs" id="cmsgs"></div>
+    <div class="csugs" id="csugs"></div>
+    <div class="csrow">
+      <input class="ci" id="ci" placeholder="Ask me anything!" onkeydown="if(event.key==='Enter')sendMsg()"/>
+      <button class="csnd" onclick="sendMsg()">➤</button>
+    </div>
+  </div>
+</div>
+</body>
+</html>
